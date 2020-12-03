@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('pull code') {
+            steps {
+               checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'ssh_auth_jenkins', url: 'git@github.com:liuchaotry01/jenkins03.git']]])
+            }
+        }
+        stage('build project'){
+            steps{
+                sh 'mvn clean package'
+            }
+        }
+    }
+}
